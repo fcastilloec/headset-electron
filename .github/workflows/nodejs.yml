@@ -37,5 +37,4 @@ jobs:
     - name: Test Linux installers
       run: npm run test:linux
     - name: Linux repositories
-#       if: runner.os === 'Linux' && github.ref ===
-      run: echo ${{ githu.ref }}
+      run: echo ${{ github.ref }}
