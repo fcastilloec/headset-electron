@@ -1,0 +1,41 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CI build and test
+env:
+  node-version: 12
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ v* ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run: sudo apt-get install fakeroot dpkg rpm lintian reprepro createrepo xvfb
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.node-version }}
+    - run: npm ci
+    - name: Linting
+      run: npm run lint
+    - name: Building for Linux
+      run: npm run build:linux
+    - name: Testing app
+      uses: GabrielBB/xvfb-action@v1.0
+      with:
+        run: npm run test:linux
+    - name: Test Linux installers
+      run: npm run test:linux
+    - name: Linux repositories
+#       if: runner.os === 'Linux' && github.ref ===
+      run: echo ${{ githu.ref }}
