@@ -21,10 +21,10 @@ jobs:
 
     steps:
     - name: Install Dependencies (Linux)
-      if: matrix.os === 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get install fakeroot dpkg rpm lintian reprepro createrepo xvfb
     - name: Install Dependencies (macOS)
-      if: matrix.os === 'macos-latest'
+      if: matrix.os == 'macos-latest'
       run: brew install graphicsmagick imagemagick
 
     - name: Get source
@@ -39,13 +39,13 @@ jobs:
       run: npm run lint
 
     - name: Building (Linux)
-      if: matrix.os === 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: npm run build:darwin
     - name: Building (macOS)
-      if: matrix.os === 'macos-latest'
+      if: matrix.os == 'macos-latest'
       run: npm run build:linux
     - name: Building (Windows)
-      if: matrix.os === 'windows-latest'
+      if: matrix.os == 'windows-latest'
       run: |
         npm run pack:linux
         npm run dist:windows
@@ -55,11 +55,11 @@ jobs:
       with:
         run: npm run test:app
     - name: Test Linux installers
-      if: matrix.os === 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: npm run test:linux
 
     - name: Linux repositories
-      if: matrix.os === 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       run: echo ${{ github.ref }}
 
     - name: Upload artifacts
