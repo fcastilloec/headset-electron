@@ -40,14 +40,14 @@ jobs:
 
     - name: Building (Linux)
       if: matrix.os == 'ubuntu-latest'
-      run: npm run build:darwin
+      run: npm run build:linux
     - name: Building (macOS)
       if: matrix.os == 'macos-latest'
-      run: npm run build:linux
+      run: npm run build:darwin
     - name: Building (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        npm run pack:linux
+        npm run pack:windows
         npm run dist:windows
 
     - name: Testing app
