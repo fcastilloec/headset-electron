@@ -1,4 +1,4 @@
-name: Build, test, and release for Linux, macOS and Windows
+name: Build, test, and/or release
 env:
   node-version: 12
 
