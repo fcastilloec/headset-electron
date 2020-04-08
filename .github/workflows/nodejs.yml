@@ -1,7 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: CI build and test
+name: Build, test, and release for Linux, macOS and Windows
 env:
   node-version: 12
 
@@ -22,7 +19,7 @@ jobs:
     steps:
     - name: Install Dependencies (Linux)
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install fakeroot dpkg rpm lintian reprepro createrepo xvfb
+      run: sudo apt-get install fakeroot dpkg rpm lintian reprepro createrepo xvfb openssl
     - name: Install Dependencies (macOS)
       if: matrix.os == 'macos-latest'
       run: brew install graphicsmagick imagemagick
@@ -59,11 +56,36 @@ jobs:
       run: npm run test:linux
 
     - name: Linux repositories
-      if: matrix.os == 'ubuntu-latest'
-      run: echo ${{ github.ref }}
+      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        openssl aes-256-cbc -K $encrypted_6866d25ad40b_key -iv $encrypted_6866d25ad40b_iv -in sig/headset_priv.asc.enc -out headset_priv.asc -d
+        npm run repo
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2-preview
       with:
         name: installers
         path: build/installers/*
+
+    - name: Retrieve tags
+      id: tags
+      if: startsWith(github.ref, 'refs/tags/')
+      run: node bin/getTags.js
+
+    - name: Create a release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: build/installers/*
+          body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.oldtag }}...${{ steps.tags.newtag }}
+          draft: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Deploy Linux repo
+      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/') && sucess()
+      uses: crazy-max/ghaction-github-pages@v1
+        with:
+          build_dir: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
