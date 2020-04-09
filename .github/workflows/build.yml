@@ -60,7 +60,7 @@ jobs:
     - name: Linux repositories
       if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/')
       run: |
-        gpg --quiet --batch --yes --decrypt --passphrase=${{ secret.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.LINUX_CERT_PASSWORD }} --output headset_priv.asc sig/headset_priv.asc.gpg
         npm run repo
 
     - name: Upload artifacts
