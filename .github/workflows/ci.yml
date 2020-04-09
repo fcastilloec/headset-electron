@@ -47,6 +47,7 @@ jobs:
     - name: Building (Windows)
       if: matrix.os == 'windows-latest'
       run: npm run build:windows
+      shell: bash
       env:
         CERT_PASSWORD: ${{ secrets.WINDOWS_CERT_PASSWORD }}
 
