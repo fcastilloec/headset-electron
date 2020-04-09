@@ -2,8 +2,7 @@
 
 set -e
 
-# TODO: Change back the GITHUB_REPOSITORY, uncommnet importing private cert
-if [[ "$GITHUB_REPOSITORY" == "fcastilloec/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
+if [[ "$GITHUB_REPOSITORY" == "headsetapp/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
   KEY_CHAIN=mac-build.keychain
   DIR="$GITHUB_WORKSPACE/sig"
   PASSWORD=headset
@@ -22,7 +21,7 @@ if [[ "$GITHUB_REPOSITORY" == "fcastilloec/headset-electron" && "$GITHUB_REF" ==
   # Add certificates to keychain and allow codesign to access them
   security import "$DIR"/apple.cer -k $KEY_CHAIN -A /usr/bin/codesign
   security import "$DIR"/osx.cer -k $KEY_CHAIN -A /usr/bin/codesign
-  # security import "$DIR"/osx.p12 -k $KEY_CHAIN -P "$CERT_PASSWORD" -A /usr/bin/codesign
+  security import "$DIR"/osx.p12 -k $KEY_CHAIN -P "$CERT_PASSWORD" -A /usr/bin/codesign
 
   echo "Add keychain to keychain-list"
   security list-keychains -s $KEY_CHAIN
