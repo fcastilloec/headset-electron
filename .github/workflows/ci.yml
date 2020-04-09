@@ -73,6 +73,7 @@ jobs:
     - name: Retrieve tags
       id: tags
       if: startsWith(github.ref, 'refs/tags/')
+      shell: bash
       run: node bin/getTags.js
 
     - name: Create a release
