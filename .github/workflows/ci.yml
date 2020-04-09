@@ -74,7 +74,7 @@ jobs:
       id: tags
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        git fetch --tags --quiet
+        git fetch --tags
         node bin/getTags.js
 
     - name: Create a release
