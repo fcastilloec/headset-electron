@@ -4,10 +4,10 @@ const exec = util.promisify(require('child_process').exec);
 async function main() {
   try {
     const { stdout: oldtag } = await exec(
-      'git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`',
+      'git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)',
     );
     const { stdout: newtag } = await exec(
-      'git describe --abbrev=0 --tags `git rev-list --tags --max-count=1`',
+      'git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1)',
     );
 
     console.log('\x1b[32m%s\x1b[0m', `Previous tag: ${oldtag}`);
