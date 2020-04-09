@@ -4,12 +4,10 @@
 
 set -e
 
-DIR="$GITHUB_WORKSPACE/headset-electron/sig"
+DIR="$GITHUB_WORKSPACE/sig"
 
-echo $DIR
-echo $GITHUB_REF
-
-if [[ "$GITHUB_REPOSITORY" == "headsetapp/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
+# TODO: Change back the GITHUB_REPOSITORY
+if [[ "$GITHUB_REPOSITORY" == "fcastilloec/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
   KEY_CHAIN=mac-build.keychain
   security create-keychain -p travis $KEY_CHAIN
   # Make the keychain the default so identities are found

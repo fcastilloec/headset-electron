@@ -16,6 +16,7 @@ const options = {
 };
 
 if (CERT_PASSWORD && GITHUB_REF && GITHUB_REF.startsWith('refs/tags/')) {
+  // TODO: Uncomment this, and delete the console.log line
   // options.certificateFile = 'sig/headset.pfx';
   // options.certificatePassword = CERT_PASSWORD;
   console.log('This would have enabled signing');
