@@ -6,6 +6,9 @@ set -e
 
 DIR="$GITHUB_WORKSPACE/headset-electron/sig"
 
+echo $DIR
+echo $GITHUB_REF
+
 if [[ "$GITHUB_REPOSITORY" == "headsetapp/headset-electron" && "$GITHUB_REF" == refs/tags/* ]]; then
   KEY_CHAIN=mac-build.keychain
   security create-keychain -p travis $KEY_CHAIN
@@ -26,6 +29,8 @@ if [[ "$GITHUB_REPOSITORY" == "headsetapp/headset-electron" && "$GITHUB_REF" == 
 
   echo "Settting key partition list"
   security set-key-partition-list -S apple-tool:,apple: -s -k travis $KEY_CHAIN
+else
+  printf "\x1b[33m%s\x1b[0m\n" "The package will not be signed"
 fi
 
 OS=darwin node bin/packager/packager.js

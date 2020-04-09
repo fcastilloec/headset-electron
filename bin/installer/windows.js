@@ -16,8 +16,9 @@ const options = {
 };
 
 if (CERT_PASSWORD && GITHUB_REF && GITHUB_REF.startsWith('refs/tags/')) {
-  options.certificateFile = 'sig/headset.pfx';
-  options.certificatePassword = CERT_PASSWORD;
+  // options.certificateFile = 'sig/headset.pfx';
+  // options.certificatePassword = CERT_PASSWORD;
+  console.log('This would have enabled signing');
 } else {
   console.log('Warning: The package will not be signed');
 }
