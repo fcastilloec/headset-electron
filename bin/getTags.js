@@ -3,9 +3,9 @@ const exec = util.promisify(require('child_process').exec);
 
 async function main() {
   try {
-    const { stdout: oldtag } = await exec(
-      'git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1)',
-    );
+    const { stdout: ref } = await exec('git rev-list --tags --skip=1 --max-count=1');
+    console.log(ref);
+    const { stdout: oldtag } = await exec(`git describe --abbrev=0 --tags ${ref}`);
     const { stdout: newtag } = await exec(
       'git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1)',
     );

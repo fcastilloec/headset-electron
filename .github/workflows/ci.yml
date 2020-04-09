@@ -18,12 +18,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Install Dependencies (Linux)
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 reprepro createrepo xvfb openssl
-    - name: Install Dependencies (macOS)
-      if: matrix.os == 'macos-latest'
-      run: brew install graphicsmagick imagemagick
+    # - name: Install Dependencies (Linux)
+    #   if: matrix.os == 'ubuntu-latest'
+    #   run: sudo apt-get install fakeroot dpkg rpm lintian gnupg2 reprepro createrepo xvfb openssl
+    # - name: Install Dependencies (macOS)
+    #   if: matrix.os == 'macos-latest'
+    #   run: brew install graphicsmagick imagemagick
 
     - name: Get source
       uses: actions/checkout@v2
