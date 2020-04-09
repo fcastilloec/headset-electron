@@ -3,17 +3,15 @@ const exec = util.promisify(require('child_process').exec);
 
 async function main() {
   try {
-    // --skip=1
     const { stdout: refs } = await exec('git rev-list --tags --max-count=2');
     const [newref, oldref] = refs.split(/\r\n|\r|\n/);
-    const { stdout: oldtag } = await exec(`git describe --abbrev=0 --tags ${oldref}`);
-    const { stdout: newtag } = await exec(`git describe --abbrev=0 --tags ${newref}`);
-    // const { stdout: newtag } = await exec(
-    //   'git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1)',
-    // );
 
-    console.log('\x1b[32m%s\x1b[0m', `Previous tag: ${oldtag}`);
+    const { stdout: newtag } = await exec(`git describe --abbrev=0 --tags ${newref}`);
+    const { stdout: oldtag } = await exec(`git describe --abbrev=0 --tags ${oldref}`);
+
     console.log('\x1b[32m%s\x1b[0m', `Latest tag: ${newtag}`);
+    console.log('\x1b[32m%s\x1b[0m', `Previous tag: ${oldtag}`);
+
     console.log(`::set-output name=oldtag::${oldtag}`);
     console.log(`::set-output name=newtag::${newtag}`);
   } catch (error) {

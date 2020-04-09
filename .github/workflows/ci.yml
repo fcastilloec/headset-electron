@@ -73,8 +73,6 @@ jobs:
     - name: Retrieve tags
       id: tags
       # if: startsWith(github.ref, 'refs/tags/')
-      # if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-      shell: bash
       run: |
         git fetch --tags --quiet
         node bin/getTags.js
