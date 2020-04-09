@@ -73,8 +73,8 @@ jobs:
 
     - name: See output
       run: |
-        echo ${{ steps.tags.oldtag }}
-        echo ${{ steps.tags.newtag }}
+        echo ${{ steps.tags.outputs.oldtag }}
+        echo ${{ steps.tags.outputs.newtag }}
 
     - name: Create a release
       if: startsWith(github.ref, 'refs/tags/')
@@ -82,7 +82,7 @@ jobs:
       with:
         allowUpdates: true
         artifacts: LICENSE
-        body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.oldtag }}...${{ steps.tags.newtag }}
+        body: https://github.com/headsetapp/headset-electron/compare/${{ steps.tags.outputs.oldtag }}...${{ steps.tags.outputs.newtag }}
         draft: true
         token: ${{ secrets.GITHUB_TOKEN }}
 
