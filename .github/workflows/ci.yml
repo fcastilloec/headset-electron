@@ -101,5 +101,6 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         npm run choco
-        Write-Host -ForegroundColor Green "`nPublishing to Chocolatey.org"
+        Write-Host "`nbuild/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))"
+        Test-Path -Path "build/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))""
         choco push build "build/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))" -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
