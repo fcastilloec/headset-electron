@@ -99,8 +99,7 @@ jobs:
     - name: Publish to Chocolatey
       # if: matrix.os == 'windows-latest' && startsWith(github.ref, 'refs/tags/')
       if: matrix.os == 'windows-latest'
+      working-directory: ./build
       run: |
         npm run choco
-        Write-Host "`nbuild/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))"
-        Test-Path -Path "build/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))""
-        choco push build "build/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))" -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
+        choco push -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
