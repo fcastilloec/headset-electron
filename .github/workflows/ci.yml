@@ -94,3 +94,9 @@ jobs:
         commit_message: Deploy ${{ steps.tags.newtag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish to Chocolatey
+      if: matrix.os == 'windows-latest' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        npm run choco
+        choco push build "build/headset.$(${{ steps.tags.outputs.newtag }}.Substring(1))" -s "https://push.chocolatey.org/" -k ${{ secrets.CHOCO_TOKEN }}
