@@ -16,25 +16,24 @@ if (process.platform === 'darwin') {
 }
 
 const appPath = path.join(__dirname, '..', execPath);
-let app = null;
 
 describe('application', function () {
   this.timeout(10000);
 
   before(() => {
-    app = new Application({
+    this.app = new Application({
       path: appPath,
       env: {
         DEBUG: 'headset*',
       },
     });
-    return app.start();
+    return this.app.start();
   });
 
-  after(() => app.stop());
+  after(() => this.app.stop());
 
   // Tests that both windows were created
-  it('start application', () => app.client
+  it('start application', () => this.app.client
     .waitUntilWindowLoaded().getWindowCount()
     .then((count) => assert.equal(count, 2, 'Wrong number of windows'))
     .then(() => delay(2000)) // Inserts a delay so player window can minimize
