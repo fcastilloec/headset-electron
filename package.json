@@ -32,8 +32,8 @@
     "build:windows": "npm run pack:windows && npm run dist:windows",
     "choco": "@powershell ./bin/build_choco.ps1 -version %npm_package_version%",
     "repo": "VERSION=$npm_package_version bash bin/linux_repo.sh",
-    "test:app": "mocha test/*.js",
-    "test:linux": "mocha test/linux/*.js"
+    "test:app": "ava test/app.test.js",
+    "test:linux": "ava --timeout=1m test/linux/installers.test.js"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -42,6 +42,7 @@
     "electron-window-state": "^5.0.3"
   },
   "devDependencies": {
+    "ava": "^3.6.0",
     "cross-env": "^7.0.0",
     "electron": "^8.0.0",
     "electron-installer-windows": "^3.0.0",
@@ -53,9 +54,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "foreman": "^3.0.1",
     "http-server": "^0.12.1",
-    "mocha": "^7.0.1",
-    "spectron": "^10.0.0",
-    "timeout-as-promise": "^1.0.0"
+    "spectron": "^10.0.0"
   },
   "optionalDependencies": {
     "create-dmg": "^4.2.0",

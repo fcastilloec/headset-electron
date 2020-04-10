@@ -1,8 +1,6 @@
-/* eslint-disable func-names */
+const test = require('ava');
 const { Application } = require('spectron');
-const assert = require('assert');
 const path = require('path');
-const delay = require('timeout-as-promise');
 const helper = require('./helper.js');
 
 let execPath = '';
@@ -17,26 +15,25 @@ if (process.platform === 'darwin') {
 
 const appPath = path.join(__dirname, '..', execPath);
 
-describe('application', function () {
-  this.timeout(10000);
-
-  before(() => {
-    this.app = new Application({
-      path: appPath,
-      env: {
-        DEBUG: 'headset*',
-      },
-    });
-    return this.app.start();
+test.before(async (t) => {
+  t.context.app = new Application({ // eslint-disable-line
+    path: appPath,
+    env: {
+      DEBUG: 'headset*',
+    },
   });
 
-  after(() => this.app.stop());
+  await t.context.app.start();
+});
 
-  // Tests that both windows were created
-  it('start application', () => this.app.client
-    .waitUntilWindowLoaded().getWindowCount()
-    .then((count) => assert.equal(count, 2, 'Wrong number of windows'))
-    .then(() => delay(2000)) // Inserts a delay so player window can minimize
-    .getMainProcessLogs()
-    .then((logs) => helper.printLogs(logs)));
+test.after.always(async (t) => {
+  await t.context.app.stop();
+});
+
+test('start application', async (t) => {
+  const app = t.context.app;
+  await app.client.waitUntilWindowLoaded();
+
+  t.is(await app.client.getWindowCount(), 2, 'Wrong number of windows');
+  helper.printLogs(await app.client.getMainProcessLogs());
 });
