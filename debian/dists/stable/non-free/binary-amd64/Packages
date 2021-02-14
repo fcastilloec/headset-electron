@@ -1,0 +1,22 @@
+Package: headset
+Version: 4.0.0
+Architecture: amd64
+Depends: libgtk-3-0, libnotify4, libnss3, libxss1, libxtst6, xdg-utils, libatspi2.0-0, libdrm2, libgbm1, libxcb-dri3-0, kde-cli-tools | kde-runtime | trash-cli | libglib2.0-bin | gvfs-bin, dbus, libc6
+Recommends: pulseaudio | libasound2
+Suggests: gir1.2-gnomekeyring-1.0, libgnome-keyring0, lsb-release
+Installed-Size: 229187
+Maintainer: Daniel Ravina <hello@headsetapp.co>
+Homepage: http://headsetapp.co
+Priority: optional
+Section: sound
+Filename: pool/non-free/h/headset/headset_4.0.0_amd64.deb
+Size: 78256812
+SHA256: 3d0a78de488f78dc02b052d9608fb104eb9903216aef92a167f48002868d3ce8
+SHA1: 21d475f1b8d3c53823c2e6f883e4263105c32302
+MD5sum: 868c9c0088d161b764c713e9139410a2
+Description: Discover and collect music on YouTube
+ Headset is a desktop app that turns YouTube into a world class music streaming 
+ service.
+    Create collections, tune-in to a music subreddit or quickly play that song 
+ you’ve had stuck in your head all day!
+
